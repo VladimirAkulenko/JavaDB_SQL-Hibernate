@@ -1,15 +1,14 @@
 package ru.netology.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.netology.entity.Person;
 import ru.netology.service.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/persons")
 public class Controller {
     private final Service service;
 
@@ -17,8 +16,18 @@ public class Controller {
         this.service = service;
     }
 
-    @GetMapping("/persons/by-city")
+    @GetMapping("/by-city")
     public List<Person> getPerson(@RequestParam("city") String city) {
         return service.getPersonsByCity(city);
+    }
+
+    @GetMapping("/by-age")
+    public List<Person> getAge(@RequestParam("age") int age) {
+        return service.getAge(age);
+    }
+
+    @GetMapping("/name-and-surname")
+    public Optional<Person> getNameSurname(@RequestParam("name") String name, @RequestParam("surname") String surname) {
+        return service.getNameSurname(name, surname);
     }
 }
